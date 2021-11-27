@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 
 const Component = () => {
@@ -8,4 +9,4 @@ const Component = () => {
   );
 };
 
-export default Component;
+export default memo(Component);
