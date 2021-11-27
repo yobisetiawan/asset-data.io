@@ -1,19 +1,19 @@
-import { Typography } from "antd";
-import { Container } from "../../components";
+import { Result } from "antd";
 import { UseTitle } from "../../utils/hooks";
 
 import "./style.css";
-
-const { Title } = Typography;
 
 const Page = () => {
   UseTitle("Page Not Found");
 
   return (
     <div className="page-not-found">
-      <Container>
-        <Title>404, Page Not Found</Title>
-      </Container>
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+      />
+      ,
     </div>
   );
 };

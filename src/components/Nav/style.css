@@ -1,5 +1,6 @@
 .c-main-nav {
-  background-color: #ddd;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
 }
 
 .c-main-nav ul {
@@ -11,6 +12,11 @@
 
 .c-main-nav ul > li {
   flex: 1 1 auto !important;
+  border-right: 1px solid #ddd;
+}
+
+.c-main-nav ul > li:first-child {
+  border-left: 1px solid #ddd;
 }
 
 .c-main-nav ul a {
@@ -19,4 +25,9 @@
   text-align: center;
   font-weight: 700;
   color: black;
+  border-bottom: 3px solid #fff;
+}
+
+.c-main-nav ul a:focus {
+  border-bottom: 3px solid #ddd;
 }

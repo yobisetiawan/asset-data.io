@@ -6,6 +6,9 @@ import Nav from "../Nav";
 
 import GetUser from "../GetUser";
 import { UseUser } from "../../utils/hooks";
+import { Card, Skeleton } from "antd";
+
+import Container from "../Container";
 
 const Component = () => {
   const { user } = UseUser();
@@ -15,7 +18,15 @@ const Component = () => {
       <GetUser />
       <Nav />
 
-      {user !== null && <Outlet />}
+      {user !== null ? (
+        <Outlet />
+      ) : (
+        <Container>
+          <Card>
+            <Skeleton />
+          </Card>
+        </Container>
+      )}
     </div>
   );
 };
