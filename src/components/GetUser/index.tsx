@@ -1,16 +1,26 @@
 import { Spin } from "antd";
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { API } from "../../config";
+import { setUser } from "../../redux/features/auth";
 import { UseFetch } from "../../utils/hooks";
 
 import "./style.css";
 
 const Component = () => {
-  const { loading } = UseFetch({
+  const dispatch = useDispatch();
+
+  const { data, loading } = UseFetch({
     API: useCallback(() => API.me(), []),
     manual: false,
   });
+
+  useEffect(() => {
+    if (data?.data) {
+      dispatch(setUser(data?.data));
+    }
+  }, [data, dispatch]);
 
   if (loading) {
     return (

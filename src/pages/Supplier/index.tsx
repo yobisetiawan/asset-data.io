@@ -1,6 +1,9 @@
 import { Container } from "../../components";
+import { UseTitle } from "../../utils/hooks";
 
 const Page = () => {
+  UseTitle("Supplier");
+
   return (
     <div>
       <Container>

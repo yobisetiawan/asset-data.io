@@ -1,5 +1,7 @@
+import { Navigate } from "react-router-dom";
+
 const Page = () => {
-  return <div>Logout</div>;
+  return <Navigate to="/login" />;
 };
 
 export default Page;

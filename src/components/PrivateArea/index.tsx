@@ -5,15 +5,17 @@ import { Outlet } from "react-router-dom";
 import Nav from "../Nav";
 
 import GetUser from "../GetUser";
+import { UseUser } from "../../utils/hooks";
 
 const Component = () => {
-  window.console.log("private area");
+  const { user } = UseUser();
 
   return (
     <div>
       <GetUser />
       <Nav />
-      <Outlet />
+
+      {user !== null && <Outlet />}
     </div>
   );
 };
