@@ -1,0 +1,22 @@
+.c-main-nav {
+  background-color: #ddd;
+}
+
+.c-main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.c-main-nav ul > li {
+  flex: 1 1 auto !important;
+}
+
+.c-main-nav ul a {
+  padding: 10px 0;
+  display: block;
+  text-align: center;
+  font-weight: 700;
+  color: black;
+}

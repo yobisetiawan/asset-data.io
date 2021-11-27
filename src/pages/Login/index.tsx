@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { UseFetch, UseTitle } from "../../utils/hooks";
 import { API } from "../../config";
 
+import TokenManager from "../../utils/helpers/TokenManager";
+
 import "./style.css";
 
 const Page = () => {
@@ -25,7 +27,7 @@ const Page = () => {
 
   useEffect(() => {
     if (data?.token) {
-      window.localStorage.setItem("token", data.token);
+      TokenManager.setToken(data?.token);
       nav("/dashboard");
     }
   }, [data, nav]);

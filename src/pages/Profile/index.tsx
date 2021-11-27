@@ -4,7 +4,7 @@ const Page = () => {
   return (
     <div>
       <Container>
-        <div>asdasd</div>
+        <div>Profile</div>
       </Container>
     </div>
   );
