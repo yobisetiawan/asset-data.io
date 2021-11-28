@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import qs from "qs";
-import { Table, Pagination, Input } from "antd";
+import { Table, Pagination, Input, Modal, Row, Col, Button } from "antd";
 import { Box } from "../../components";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 
-import { setSupplier } from "../../redux/features/supplier";
+import {
+  setSupplier,
+  setSupplierSelected,
+} from "../../redux/features/supplier";
 import { UseFetch } from "../../utils/hooks";
 import { API } from "../../config";
 
-import { columns } from "./TableColumns";
+import useTableHooks from "./TableHooks";
+import Form from "./Form";
 
 const Component = () => {
   const [params, setparams] = useState({
@@ -19,86 +23,64 @@ const Component = () => {
     orderDir: "asc",
     limit: 15,
     page: 1,
-  }) as any;
+  });
 
-  const { list, pagination } = useSelector(
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const { list, pagination, row } = useSelector(
     (state: RootState) => state.supplier
   );
 
   const dispatch = useDispatch();
 
-  const { loading, data } = UseFetch({
+  const { loading, data, fetchData } = UseFetch({
     API: useCallback(() => {
       return API.supplier(qs.stringify(params));
     }, [params]),
     manual: false,
   });
 
-  const dataSource = useCallback(() => {
-    if (list) {
-      return list.map((el: any) => {
-        return {
-          key: el.guid,
-          name: el.name,
-          contact_person: el.contact_person,
-          contact_number: el.contact_number,
-        };
-      });
-    }
-    return [];
-  }, [list]) as any;
+  const onEdit = (id: string) => {
+    const selected = list.find((i: any) => i.guid === id);
+    dispatch(setSupplierSelected(selected));
+    setIsModalVisible(true);
+  };
 
-  const paginationChage = useCallback(
-    (page, pageSize) => {
-      setparams({ ...params, page: page });
-    },
-    [params]
-  );
-
-  const onSort = useCallback(
-    (c: any) => {
-      let orderDir = "asc";
-
-      if (params.orderCol === c.dataIndex) {
-        orderDir = params.orderDir === "asc" ? "desc" : "asc";
-      }
-
-      return {
-        onClick: () => {
-          setparams({
-            ...params,
-            orderCol: c.dataIndex,
-            orderDir: orderDir,
-          });
-        },
-      };
-    },
-    [params]
-  );
-
-  const getColumns = useCallback(
-    () => columns(params, onSort),
-    [params, onSort]
+  const { onSearch, getColumns, paginationChange, dataSource } = useTableHooks(
+    params,
+    setparams,
+    list,
+    fetchData,
+    onEdit
   );
 
   useEffect(() => {
     dispatch(
       setSupplier({
-        list: data?.data,
+        list: data?.data || [],
         pagination: data?.meta,
       })
     );
   }, [data, dispatch]);
 
-  const onSearch = (value: string) =>
-    setparams({
-      ...params,
-      page: 1,
-      keyword: value,
-    });
-
   return (
     <div>
+      <Row gutter={16}>
+        <Col span={12}>
+          <h1>Supplier</h1>
+        </Col>
+        <Col span={12} style={{ textAlign: "right" }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              dispatch(setSupplierSelected({ now: new Date().getTime() }));
+              setIsModalVisible(true);
+            }}
+          >
+            Add New Supplier
+          </Button>
+        </Col>
+      </Row>
       <div style={{ display: "flex", justifyContent: "end" }}>
         <Input.Search
           placeholder="Search"
@@ -123,8 +105,29 @@ const Component = () => {
         current={pagination?.current_page || 1}
         defaultPageSize={15}
         total={pagination?.total || 0}
-        onChange={paginationChage}
+        onChange={paginationChange}
       ></Pagination>
+
+      <Modal
+        title={row?.guid ? "Edit Supplier" : "Add New Supplier"}
+        visible={isModalVisible}
+        footer={false}
+        onCancel={() => {
+          setIsModalVisible(false);
+        }}
+      >
+        <Form
+          id={row?.guid || ""}
+          row={row}
+          onSuccess={() => {
+            setIsModalVisible(false);
+            fetchData();
+          }}
+          onExit={() => {
+            setIsModalVisible(false);
+          }}
+        />
+      </Modal>
     </div>
   );
 };

@@ -1,10 +1,19 @@
-import { Button, Space } from "antd";
+import { Button, Modal, Space } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
+
+const { confirm } = Modal;
 
 export const columns = (
   params: any,
-  onSort: (c: any) => {}
+  onSort: (c: any) => {},
+  onEdit: (id: string) => void,
+  onDelete: (id: string) => void
 ): ColumnsType<any> => {
   const getStatSort = (field: string) => {
     if (params.orderCol === field) {
@@ -19,9 +28,18 @@ export const columns = (
       dataIndex: "guid",
       key: "View",
       width: 90,
-      render: () => (
-        <Button type="primary" size="small" icon={<EyeOutlined />} />
-      ),
+      render: (text, record) => {
+        return (
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(text, record);
+            }}
+            size="small"
+            icon={<EyeOutlined />}
+          />
+        );
+      },
     },
     {
       title: "Supplier Name",
@@ -55,10 +73,35 @@ export const columns = (
       dataIndex: "guid",
       key: "Actions",
       width: 100,
-      render: () => (
+      render: (text, record) => (
         <Space>
-          <Button type="ghost" size="small" icon={<EditOutlined />} />
-          <Button type="primary" danger size="small" icon={<DeleteOutlined />} />
+          <Button
+            type="ghost"
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => {
+              onEdit(record.key);
+            }}
+          />
+          <Button
+            type="primary"
+            danger
+            size="small"
+            onClick={() => {
+              confirm({
+                icon: <ExclamationCircleOutlined />,
+                content: (
+                  <p>Are you sure you want to delete this "{record.name}"</p>
+                ),
+                okText: "Delete",
+                cancelText: "Cancel",
+                onOk() {
+                  onDelete(record.key);
+                },
+              });
+            }}
+            icon={<DeleteOutlined />}
+          />
         </Space>
       ),
     },

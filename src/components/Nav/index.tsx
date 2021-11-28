@@ -1,3 +1,9 @@
+import {
+  HomeOutlined,
+  PoweroffOutlined,
+  ShopOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import React, { memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,16 +33,34 @@ const Component = () => {
       <Container>
         <ul>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard">
+              <div>
+                <HomeOutlined style={{ fontSize: "25px", color: "#08c" }} />
+              </div>
+              Dashboard
+            </Link>
           </li>
           <li>
-            <Link to="/supplier">Supplier</Link>
+            <Link to="/supplier">
+              <div>
+                <ShopOutlined style={{ fontSize: "25px", color: "#08c" }} />
+              </div>
+              Supplier
+            </Link>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">
+              <div>
+                <UserOutlined style={{ fontSize: "25px", color: "#08c" }} />
+              </div>
+              Profile
+            </Link>
           </li>
           <li>
             <a href="#logout" onClick={logout}>
+              <div>
+                <PoweroffOutlined style={{ fontSize: "25px", color: "#08c" }} />
+              </div>
               Logout
             </a>
           </li>

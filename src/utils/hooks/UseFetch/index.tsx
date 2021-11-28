@@ -13,7 +13,7 @@ interface State {
 }
 
 interface Action {
-  type: "pending" | "error" | "success";
+  type: "pending" | "error" | "success" | "reset";
   payload?: any;
 }
 
@@ -27,6 +27,8 @@ function reducer(state: State, action: Action) {
       return { ...state, loading: false, data: action.payload, error: null };
     case "error":
       return { ...state, loading: false, error: action.payload };
+    case "reset":
+      return initialState;
     default:
       return state;
   }
@@ -45,6 +47,10 @@ const Hook = ({ API, manual }: Props) => {
     }
   }, [API]);
 
+  const onReset = useCallback(() => {
+    dispatch({ type: "reset" });
+  }, []);
+
   useEffect(() => {
     if (!manual) {
       fetchData();
@@ -56,6 +62,7 @@ const Hook = ({ API, manual }: Props) => {
     loading: state.loading,
     error: state.error,
     fetchData,
+    onReset,
   };
 };
 

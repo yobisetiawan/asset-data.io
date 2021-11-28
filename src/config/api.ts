@@ -14,6 +14,9 @@ const api = {
   me: () => http.get("/a/me", config()),
   supplier: (params: string) =>
     http.get("/setting/supplier/filter?" + params, config()),
+  supplierCreate: (data: any) => http.post("/setting/supplier", data, config()),
+  supplierDestroy: (id: string) =>
+    http.delete("/setting/supplier/" + id, config()),
 };
 
 export default api;

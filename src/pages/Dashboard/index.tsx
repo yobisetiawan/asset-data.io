@@ -4,15 +4,12 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 
 import { Box, Container } from "../../components";
 import { UseTitle } from "../../utils/hooks";
-import { Card, Col, Row } from "antd";
+import { Card, Col, Row, Statistic } from "antd";
 
 const data01 = [
   { name: "Group A", value: 400 },
   { name: "Group B", value: 300 },
   { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 278 },
-  { name: "Group F", value: 189 },
 ];
 
 const Page = () => {
@@ -21,18 +18,49 @@ const Page = () => {
   return (
     <div className="page">
       <Container>
-        <div>
-          <h1>Dashboard</h1>
-        </div>
+        <Row gutter={16}>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic title="Total Policies" value={112893} />
+            </Card>
+            <Box height={20}></Box>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic title="Total Unassigned Assets" value={112893} />
+            </Card>
+            <Box height={20}></Box>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic title="Total User" value={112893} />
+            </Card>
+            <Box height={20}></Box>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic title="Total User" value={112893} />
+            </Card>
+            <Box height={20}></Box>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Card>
+              <Statistic title="Total Audited Assets" value={112893} />
+            </Card>
+            <Box height={20}></Box>
+          </Col>
+        </Row>
+
         <Card>
           <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
         </Card>
         <Box height={20} />
         <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Card>asdasd</Card>
+            <Box height={20}></Box>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Card>
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart width={400} height={400}>
@@ -48,6 +76,7 @@ const Page = () => {
                 </PieChart>
               </ResponsiveContainer>
             </Card>
+            <Box height={20}></Box>
           </Col>
         </Row>
       </Container>
