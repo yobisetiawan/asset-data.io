@@ -11,6 +11,7 @@
 - Fullcalendar
 - Auth (login/logout)
 - CRUD Supplier
+- Pages : Login, Dashboard, Supplier, Profile
 
 ## Available Scripts
 
