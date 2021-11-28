@@ -1,0 +1,31 @@
+.c-main-nav {
+  --br1-color: #f0f0f0;
+  background-color: #fff;
+  border-bottom: 1px solid var(--br1-color);
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    & > li {
+      flex: 1 1 auto !important;
+      border-right: 1px solid var(--br1-color);
+      &:first-child {
+        border-left: 1px solid var(--br1-color);
+      }
+
+      a {
+        padding: 10px 0;
+        display: block;
+        text-align: center;
+        font-weight: 700;
+        color: black;
+        border-bottom: 3px solid transparent;
+        &:focus {
+          border-bottom: 3px solid var(--br1-color);
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { API } from "../../config";
 import { setUser } from "../../redux/features/auth";
 import { UseFetch } from "../../utils/hooks";
 
-import "./style.css";
+import "./style.scss";
 
 const Component = () => {
   const dispatch = useDispatch();

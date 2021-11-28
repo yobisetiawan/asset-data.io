@@ -12,7 +12,7 @@ import TokenManager from "../../utils/helpers/TokenManager";
 
 import Container from "../Container";
 
-import "./style.css";
+import "./style.scss";
 
 const Component = () => {
   const dispatch = useDispatch();
