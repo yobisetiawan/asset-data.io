@@ -20,6 +20,7 @@ const Component = () => {
     limit: 15,
     page: 1,
   }) as any;
+
   const { list, pagination } = useSelector(
     (state: RootState) => state.supplier
   );
