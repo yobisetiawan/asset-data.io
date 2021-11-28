@@ -49,7 +49,6 @@ const Component = () => {
 
   const paginationChage = useCallback(
     (page, pageSize) => {
-      window.console.log(page, pageSize);
       setparams({ ...params, page: page });
     },
     [params]

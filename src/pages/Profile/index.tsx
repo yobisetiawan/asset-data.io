@@ -8,10 +8,6 @@ const Page = () => {
 
   const { user } = UseUser();
 
-  const onFinish = async (values: any) => {
-    window.console.log(values);
-  };
-
   const uploadButton = (
     <div>
       {<PlusOutlined />}
@@ -44,7 +40,6 @@ const Page = () => {
         </div>
 
         <Form
-          onFinish={onFinish}
           layout="vertical"
           initialValues={{
             first_name: user?.first_name || "",

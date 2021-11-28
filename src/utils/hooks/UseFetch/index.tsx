@@ -1,25 +1,48 @@
 import { AxiosResponse } from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 
 interface Props {
   API: () => Promise<AxiosResponse<any, any>>;
   manual: boolean;
 }
 
+interface State {
+  loading: boolean;
+  data: any;
+  error: any;
+}
+
+interface Action {
+  type: "pending" | "error" | "success";
+  payload?: any;
+}
+
+const initialState = { loading: false, data: null, error: null };
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case "pending":
+      return { ...state, loading: true };
+    case "success":
+      return { ...state, loading: false, data: action.payload, error: null };
+    case "error":
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
 const Hook = ({ API, manual }: Props) => {
-  const [data, setData] = useState(null) as any;
-  const [error, setError] = useState(null) as any;
-  const [loading, setLoading] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchData = useCallback(async () => {
-    setLoading(true);
+    dispatch({ type: "pending" });
     try {
       const { data: response } = await API();
-      setData(response);
+      dispatch({ type: "success", payload: response });
     } catch (err) {
-      setError(err);
+      dispatch({ type: "error", payload: err });
     }
-    setLoading(false);
   }, [API]);
 
   useEffect(() => {
@@ -29,9 +52,9 @@ const Hook = ({ API, manual }: Props) => {
   }, [fetchData, manual]);
 
   return {
-    data,
-    loading,
-    error,
+    data: state.data,
+    loading: state.loading,
+    error: state.error,
     fetchData,
   };
 };
