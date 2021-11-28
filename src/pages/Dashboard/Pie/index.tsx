@@ -11,22 +11,20 @@ const data01 = [
 
 const Component = () => {
   return (
-    <Card>
-      <Card title="Insurance Claim By Status">
-        <ResponsiveContainer width="100%" height={400}>
-          <PieChart width={400} height={400}>
-            <Pie
-              dataKey="value"
-              isAnimationActive={false}
-              data={data01}
-              fill="#8884d8"
-              label
-              innerRadius={70}
-            />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </Card>
+    <Card title="Insurance Claim By Status">
+      <ResponsiveContainer width="100%" height={400}>
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={data01}
+            fill="#8884d8"
+            label
+            innerRadius={70}
+          />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </Card>
   );
 };
