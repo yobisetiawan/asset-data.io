@@ -1,5 +1,6 @@
-import { Form, Input, Button, Row, Col, Divider, Alert } from "antd";
+import { Form, Input, Button, Row, Col, Divider } from "antd";
 import { useCallback, useEffect, useRef } from "react";
+import { AlertErr } from "../../components";
 import { API } from "../../config";
 import { UseFetch } from "../../utils/hooks";
 
@@ -38,27 +39,9 @@ const Component = ({ id, row, onSuccess, onExit }: Props) => {
     }
   }, [data, onReset, onSuccess]);
 
-  const msg = error?.response?.data?.message || "";
-
   return (
     <div>
-      {msg !== "" && (
-        <Alert
-          message={
-            <div>
-              <h4>{msg}</h4>
-              {(Object.entries(error?.response?.data?.data?.fields) || []).map(
-                (ii: any, index: number) => {
-                  return <div key={index}>{ii[1].join(", ")}</div>;
-                }
-              )}
-            </div>
-          }
-          type="error"
-          showIcon
-          style={{ marginBottom: 30 }}
-        />
-      )}
+      <AlertErr error={error} />
 
       <Form
         form={form}

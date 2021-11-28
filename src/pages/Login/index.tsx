@@ -7,7 +7,8 @@ import { API } from "../../config";
 
 import TokenManager from "../../utils/helpers/TokenManager";
 
-import "./style.css";
+import "./style.scss";
+import { AlertErr } from "../../components";
 
 const Page = () => {
   UseTitle("Login");
@@ -15,7 +16,7 @@ const Page = () => {
   const formData = useRef({}) as any;
   const nav = useNavigate();
 
-  const { data, loading, fetchData } = UseFetch({
+  const { data, error, loading, fetchData } = UseFetch({
     API: () => API.login(formData.current),
     manual: true,
   });
@@ -37,12 +38,17 @@ const Page = () => {
       <div className="wrap">
         <h1 className="logo">AssetData.io</h1>
 
+        <AlertErr error={error} />
+
         <Card>
           <Form onFinish={onFinish} layout="vertical">
             <Form.Item
               label="Email"
               name="email"
-              rules={[{ required: true, message: "This is required" }]}
+              rules={[
+                { required: true, message: "This is required" },
+                { type: "email" },
+              ]}
             >
               <Input placeholder="Email" />
             </Form.Item>
