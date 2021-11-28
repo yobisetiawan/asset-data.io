@@ -1,16 +1,16 @@
 # Overview
 
-### demo url https://yb-assets-io.herokuapp.com/
+### Demo URL https://yb-assets-io.herokuapp.com/
 
-- redux toolkit
-- scss
-- ant design
-- axios
-- react router
-- recharts
-- fullcalendar
-- basic auth (login/logout)
-- basic crud
+- Redux Toolkit
+- Scss
+- Ant design
+- Axios
+- React router
+- Recharts
+- Fullcalendar
+- Auth (login/logout)
+- CRUD Supplier
 
 ## Available Scripts
 
