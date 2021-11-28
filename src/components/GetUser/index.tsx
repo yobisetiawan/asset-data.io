@@ -1,4 +1,5 @@
 import { Spin } from "antd";
+import { Navigate } from "react-router-dom";
 import React, { memo, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -11,7 +12,7 @@ import "./style.css";
 const Component = () => {
   const dispatch = useDispatch();
 
-  const { data, loading } = UseFetch({
+  const { data, loading, error } = UseFetch({
     API: useCallback(() => API.me(), []),
     manual: false,
   });
@@ -21,6 +22,10 @@ const Component = () => {
       dispatch(setUser(data?.data));
     }
   }, [data, dispatch]);
+
+  if (error) {
+    return <Navigate to="/login" />;
+  }
 
   if (loading) {
     return (

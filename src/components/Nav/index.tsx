@@ -1,11 +1,27 @@
-import React, { memo } from "react";
-import { Link } from "react-router-dom";
+import React, { memo, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../../redux/features/auth";
+import TokenManager from "../../utils/helpers/TokenManager";
 
 import Container from "../Container";
 
 import "./style.css";
 
 const Component = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+
+  const logout = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(setUser(null));
+      TokenManager.ereaseToken();
+      nav("/login");
+    },
+    [dispatch, nav]
+  );
+
   return (
     <nav className="c-main-nav">
       <Container>
@@ -20,7 +36,9 @@ const Component = () => {
             <Link to="/profile">Profile</Link>
           </li>
           <li>
-            <Link to="/logout">Logout</Link>
+            <a href="#logout" onClick={logout}>
+              Logout
+            </a>
           </li>
         </ul>
       </Container>

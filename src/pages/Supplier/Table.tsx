@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect } from "react";
-import { Table, Pagination } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import qs from "qs";
+import { Table, Pagination, Input } from "antd";
 import { Box } from "../../components";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -12,14 +13,23 @@ import { API } from "../../config";
 import { columns } from "./TableColumns";
 
 const Component = () => {
+  const [params, setparams] = useState({
+    keyword: "",
+    orderCol: "name",
+    orderDir: "asc",
+    limit: 15,
+    page: 1,
+  }) as any;
   const { list, pagination } = useSelector(
     (state: RootState) => state.supplier
   );
 
   const dispatch = useDispatch();
 
-  const { data } = UseFetch({
-    API: useCallback(() => API.supplier(), []),
+  const { loading, data } = UseFetch({
+    API: useCallback(() => {
+      return API.supplier(qs.stringify(params));
+    }, [params]),
     manual: false,
   });
 
@@ -37,6 +47,40 @@ const Component = () => {
     return [];
   }, [list]) as any;
 
+  const paginationChage = useCallback(
+    (page, pageSize) => {
+      window.console.log(page, pageSize);
+      setparams({ ...params, page: page });
+    },
+    [params]
+  );
+
+  const onSort = useCallback(
+    (c: any) => {
+      let orderDir = "asc";
+
+      if (params.orderCol === c.dataIndex) {
+        orderDir = params.orderDir === "asc" ? "desc" : "asc";
+      }
+
+      return {
+        onClick: () => {
+          setparams({
+            ...params,
+            orderCol: c.dataIndex,
+            orderDir: orderDir,
+          });
+        },
+      };
+    },
+    [params]
+  );
+
+  const getColumns = useCallback(
+    () => columns(params, onSort),
+    [params, onSort]
+  );
+
   useEffect(() => {
     dispatch(
       setSupplier({
@@ -46,14 +90,32 @@ const Component = () => {
     );
   }, [data, dispatch]);
 
+  const onSearch = (value: string) =>
+    setparams({
+      ...params,
+      page: 1,
+      keyword: value,
+    });
+
   return (
     <div>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <Input.Search
+          placeholder="Search"
+          style={{ width: 200 }}
+          allowClear
+          onSearch={onSearch}
+          loading={loading}
+        />
+      </div>
+      <Box height={20} />
       <Table
         bordered
         dataSource={dataSource()}
-        columns={columns}
+        columns={getColumns()}
         pagination={false}
         scroll={{ y: 380 }}
+        loading={loading}
       />
       <Box height={30} />
       <Pagination
@@ -61,6 +123,7 @@ const Component = () => {
         current={pagination?.current_page || 1}
         defaultPageSize={15}
         total={pagination?.total || 0}
+        onChange={paginationChage}
       ></Pagination>
     </div>
   );

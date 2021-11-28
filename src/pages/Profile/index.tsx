@@ -1,6 +1,7 @@
 import { Container } from "../../components";
 import { UseTitle, UseUser } from "../../utils/hooks";
-import { Form, Input, Button, Row, Col, Divider } from "antd";
+import { Form, Input, Button, Row, Col, Divider, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 const Page = () => {
   UseTitle("Profile");
@@ -11,14 +12,35 @@ const Page = () => {
     window.console.log(values);
   };
 
+  const uploadButton = (
+    <div>
+      {<PlusOutlined />}
+      <div style={{ marginTop: 8 }}>
+        <small>Upload</small>
+      </div>
+    </div>
+  );
+
   return (
     <div className="page page-profile">
       <Container>
-        <div>
-          <h1>Profile</h1>
-          <h2>Account {user?.role_name}</h2>
-          <p>{user?.email}</p>
-          <p>{user?.account_type}</p>
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: 20 }}>
+            <Upload
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+            >
+              {uploadButton}
+            </Upload>
+          </div>
+          <div>
+            <h1>Profile</h1>
+            <h2>Account {user?.role_name}</h2>
+            <p>{user?.email}</p>
+            <p>{user?.account_type}</p>
+          </div>
         </div>
 
         <Form

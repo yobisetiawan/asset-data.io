@@ -12,11 +12,8 @@ const config = () => {
 const api = {
   login: (data: any) => http.post("/a/hash-login", data),
   me: () => http.get("/a/me", config()),
-  supplier: () =>
-    http.get(
-      "/setting/supplier/filter?orderCol=name&orderDir=asc&limit=15",
-      config()
-    ),
+  supplier: (params: string) =>
+    http.get("/setting/supplier/filter?" + params, config()),
 };
 
 export default api;
