@@ -12,6 +12,7 @@
 - Auth (login/logout)
 - CRUD Supplier
 - Pages : Login, Dashboard, Supplier, Profile
+- Cypress Test
 
 ## Available Scripts
 
@@ -22,5 +23,7 @@ In the project directory, you can run:
 ### `yarn test` 
 
 ### `yarn build`
+
+### `yarn cypress open`
  
 
