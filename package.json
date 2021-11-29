@@ -53,6 +53,10 @@
     ]
   },
   "devDependencies": {
-    "@types/qs": "^6.9.7"
+    "@cypress/react": "^5.10.3",
+    "@cypress/webpack-dev-server": "^1.7.0",
+    "@testing-library/cypress": "^8.0.2",
+    "@types/qs": "^6.9.7",
+    "cypress": "^9.1.0"
   }
 }

@@ -12,7 +12,7 @@ const Page = () => {
   UseTitle("Dashboard");
 
   return (
-    <div className="page">
+    <div className="page page-dashboard">
       <Container>
         <Statistic />
         <FullCalendar />
