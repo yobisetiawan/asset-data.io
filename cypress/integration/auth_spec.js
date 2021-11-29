@@ -17,5 +17,7 @@ describe("auth", () => {
     cy.findByRole("button", {
       name: /sign in/i,
     }).click();
+
+    cy.url().should("include", "/dashboard");
   });
 });
